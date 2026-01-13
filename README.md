@@ -25,13 +25,13 @@ Every finding is:
 
 k8s-danger-scan is explicitly **NOT**:
 
-- ❌ A vulnerability scanner
-- ❌ A CVE database
-- ❌ A compliance tool
-- ❌ A policy engine
-- ❌ An SBOM generator
-- ❌ A runtime security tool
-- ❌ An admission controller
+-  A vulnerability scanner
+-  A CVE database
+-  A compliance tool
+-  A policy engine
+-  An SBOM generator
+-  A runtime security tool
+-  An admission controller
 
 **No agents. No webhooks. No dashboards. No SaaS.**
 
