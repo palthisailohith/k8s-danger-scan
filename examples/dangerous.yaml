@@ -1,0 +1,212 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: privileged-pod
+  namespace: prod
+spec:
+  containers:
+  - name: app
+    image: nginx:latest
+    securityContext:
+      privileged: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostpath-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostpath-app
+  template:
+    metadata:
+      labels:
+        app: hostpath-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.21
+      volumes:
+      - name: host-volume
+        hostPath:
+          path: /var/lib
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-socket-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-app
+  template:
+    metadata:
+      labels:
+        app: docker-app
+    spec:
+      containers:
+      - name: app
+        image: docker:latest
+        volumeMounts:
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: root-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: root-app
+  template:
+    metadata:
+      labels:
+        app: root-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.21
+        securityContext:
+          runAsUser: 0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: privilege-escalation-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pe-app
+  template:
+    metadata:
+      labels:
+        app: pe-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.21
+        securityContext:
+          allowPrivilegeEscalation: true
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: wildcard-role
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: default-sa-binding
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: public-lb
+  namespace: kube-system
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-svc
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30080
+  selector:
+    app: web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostnetwork-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostnet-app
+  template:
+    metadata:
+      labels:
+        app: hostnet-app
+    spec:
+      hostNetwork: true
+      containers:
+      - name: app
+        image: nginx:1.21
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostpid-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostpid-app
+  template:
+    metadata:
+      labels:
+        app: hostpid-app
+    spec:
+      hostPID: true
+      containers:
+      - name: app
+        image: nginx:1.21
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostipc-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostipc-app
+  template:
+    metadata:
+      labels:
+        app: hostipc-app
+    spec:
+      hostIPC: true
+      containers:
+      - name: app
+        image: nginx:1.21
