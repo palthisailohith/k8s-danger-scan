@@ -355,35 +355,6 @@ go test ./...
 go build -o k8s-danger-scan ./cmd/k8s-danger-scan
 ```
 
-## FAQ
-
-### Why not use OPA/Gatekeeper?
-
-OPA is a policy engine. k8s-danger-scan is a scanner.
-
-- **OPA**: Requires writing Rego policies, enforces at admission time
-- **k8s-danger-scan**: Zero config, scans YAML files, designed for CI
-
-Use OPA for runtime enforcement. Use k8s-danger-scan for pre-merge validation.
-
-### Can this replace my policy engine?
-
-No. k8s-danger-scan detects catastrophic misconfigurations. It doesn't enforce organizational policies.
-
-### Why no auto-fix?
-
-Auto-fixing security issues is dangerous. You need to understand the finding and decide the appropriate fix for your context.
-
-### Can I add custom rules?
-
-Not in v1. The 12 rules are intentionally locked to maintain low noise and high signal.
-
-If you need custom rules, consider OPA, Kyverno, or Datree.
-
-### Will you add compliance frameworks (CIS, PCI-DSS, etc.)?
-
-No. Compliance mapping adds noise and complexity. Use Trivy, Checkov, or Prisma Cloud for compliance.
-
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
