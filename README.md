@@ -79,7 +79,7 @@ Exit codes:
 ```
 
 Rules: Exactly 12 mean ones (locked for v1)
-
+```bash
 privileged-container (HIGH)
 hostpath-volume (HIGH)
 docker-socket-mount (HIGH)
@@ -92,5 +92,7 @@ nodeport-service (MEDIUM)
 latest-image-tag (MEDIUM)
 host-network (HIGH)
 host-pid-ipc (HIGH)
+```
+
 
 For more info on the tool, refer docs :))
