@@ -36,8 +36,10 @@ sudo mv k8s-danger-scan_darwin_arm64 /usr/local/bin/k8s-danger-scan
 git clone https://github.com/palthisailohith/k8s-danger-scan.git
 cd k8s-danger-scan
 go build -o k8s-danger-scan ./cmd/k8s-danger-scan
+```
 
 Try it in 10 seconds:
+```bash
 # Scan file or dir (HIGH risks only – because who has time?)
 k8s-danger-scan scan deployment.yaml
 k8s-danger-scan scan ./k8s-manifests/
@@ -50,8 +52,8 @@ k8s-danger-scan scan --include-medium ./k8s/
 
 # CI-friendly JSON
 k8s-danger-scan diff main.yaml pr.yaml --json
-
-
+```
+```bbsh
 When it saves your a*s (example output):
 HIGH RISK
 Resource: Deployment/api
@@ -66,9 +68,8 @@ High risk: 1
 Medium risk: 0
 Resources affected: 1
 Namespaces affected: prod
-
 ```
-Exit codes (for your CI gate dreams):
+Exit codes:
 
 0 = clean
 1 = mediums only (meh)
