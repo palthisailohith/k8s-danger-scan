@@ -31,8 +31,8 @@ sudo mv k8s-danger-scan_linux_amd64 /usr/local/bin/k8s-danger-scan
 curl -LO https://github.com/palthisailohith/k8s-danger-scan/releases/latest/download/k8s-danger-scan_darwin_arm64
 chmod +x k8s-danger-scan_darwin_arm64
 sudo mv k8s-danger-scan_darwin_arm64 /usr/local/bin/k8s-danger-scan
-```
-Old-school? Build it:
+
+# Old-school? Build it:
 git clone https://github.com/palthisailohith/k8s-danger-scan.git
 cd k8s-danger-scan
 go build -o k8s-danger-scan ./cmd/k8s-danger-scan
@@ -67,6 +67,7 @@ Medium risk: 0
 Resources affected: 1
 Namespaces affected: prod
 
+```
 Exit codes (for your CI gate dreams):
 
 0 = clean
