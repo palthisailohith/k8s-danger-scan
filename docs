@@ -41,7 +41,7 @@ Just a fast, deterministic CLI that scans YAML and exits with a clear signal.
 
 ### Download Binary
 
-Download the latest release from [GitHub Releases](https://github.com/palthisailohith/k8s-danger-scan/releases) (coming soon).
+Download the latest release from [GitHub Releases](https://github.com/palthisailohith/k8s-danger-scan/releases).
 
 ### Build From Source
 
