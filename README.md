@@ -32,17 +32,17 @@ git clone https://github.com/palthisailohith/k8s-danger-scan.git && cd k8s-dange
 
 Try it in 10 seconds:
 
-# Scan stuff (only HIGH by default – because who has time?)
+Scan stuff (only HIGH by default – because who has time?)
 k8s-danger-scan scan deployment.yaml
 k8s-danger-scan scan ./k8s-manifests/
 
-# Diff mode = my favorite (only new stupidity!)
+Diff mode = my favorite (only new stupidity!)
 k8s-danger-scan diff main-branch.yaml my-pr.yaml
 
-# Brave? See the mediums too
+Brave? See the mediums too
 k8s-danger-scan scan --include-medium ./k8s/
 
-# CI loves JSON
+CI loves JSON
 k8s-danger-scan diff main.yaml pr.yaml --json
 
 What it looks like when it saves your a*s:
