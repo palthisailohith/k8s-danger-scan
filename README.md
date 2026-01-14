@@ -6,16 +6,16 @@ One mean question it asks:
 **"Did this change just make everything way worse?"**
 
 Only screams about the truly dumb stuff:  
-privileged pods, wildcard RBAC god-mode, hostPath to /etc, docker.sock mounts, accidental public LoadBalancers in prod, etc.
+privileged pods, wildcard RBAC, hostPath to /etc, docker.sock mounts, accidental public LoadBalancers in prod, etc.
 
 No CVEs. No agents. No dashboards. No SaaS. No 400 "medium" alerts from 2019 debt.  
-Just danger — explained like you're five (but you're not).
+Just danger explained like you're five (but you're not).
 
-## Why bother? (short version)
+## Why bother?
 
 Other scanners bury you in noise until you disable them forever.  
 This one ignores your ancient sins and **only flags new landmines** from your diff.  
-Perfect for PR reviews, "is this safe to apply?" panic moments, or finally auditing that frozen cluster nobody has touched in years.
+Perfect for PR reviews, "Is this safe to apply?" panic moments, or finally auditing that frozen cluster nobody has touched in years.
 
 ## Install – binaries (no Go needed)
 
@@ -53,7 +53,7 @@ k8s-danger-scan scan --include-medium ./k8s/
 # CI-friendly JSON
 k8s-danger-scan diff main.yaml pr.yaml --json
 ```
-```bbsh
+
 When it saves your a*s (example output):
 HIGH RISK
 Resource: Deployment/api
@@ -68,7 +68,7 @@ High risk: 1
 Medium risk: 0
 Resources affected: 1
 Namespaces affected: prod
-```
+
 Exit codes:
 
 0 = clean
@@ -92,4 +92,4 @@ latest-image-tag (MEDIUM)
 host-network (HIGH)
 host-pid-ipc (HIGH)
 
-For more info on the tool refer docs :))
+For more info on the tool, refer docs :))
