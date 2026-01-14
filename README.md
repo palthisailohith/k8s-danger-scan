@@ -1,21 +1,27 @@
-# k8s-danger-scan (sounds a little odd, but dramatic, eh.)
+# k8s-danger-scan
 
-Catastrophic Kubernetes misconfigs? Yeah, this CLI catches them **before** your cluster becomes tomorrow's headline.
+Catastrophic Kubernetes misconfigs? This CLI catches them **before** your cluster becomes tomorrow’s headline.
 
-One brutal question it asks:  
+One mean question it asks:  
 **"Did this change just make everything way worse?"**
 
-Only screams about the truly stupid stuff: privileged pods, wildcard RBAC giving god-mode, hostPath to /etc, docker.sock mounts, accidental public LoadBalancers in prod.  
-No CVEs, no 400 "medium" alerts from ancient debt, no agents, no SaaS upsell. Just danger, explained like you're five (but you're not).
+Only screams about the truly dumb stuff:  
+privileged pods, wildcard RBAC god-mode, hostPath to /etc, docker.sock mounts, accidental public LoadBalancers in prod, etc.
 
-## Why this exists (short version)
-Other scanners bury you in noise so deep you disable them.  
-This one ignores your 2019 sins and **only flags new landmines** from diffs.  
-Great for PR reviews, "is this safe to apply?" moments, or finally auditing that stagnant cluster nobody touches.
+No CVEs. No agents. No dashboards. No SaaS. No 400 "medium" alerts from 2019 debt.  
+Just danger — explained like you're five (but you're not).
 
-## Install – binaries so you don't need Go installed
-Pick your architecture :
+## Why bother? (short version)
 
+Other scanners bury you in noise until you disable them forever.  
+This one ignores your ancient sins and **only flags new landmines** from your diff.  
+Perfect for PR reviews, "is this safe to apply?" panic moments, or finally auditing that frozen cluster nobody has touched in years.
+
+## Install – binaries (no Go needed)
+
+Pick your poison:
+
+```bash
 # Linux amd64 (most servers)
 curl -LO https://github.com/palthisailohith/k8s-danger-scan/releases/latest/download/k8s-danger-scan_linux_amd64
 chmod +x k8s-danger-scan_linux_amd64
@@ -25,29 +31,28 @@ sudo mv k8s-danger-scan_linux_amd64 /usr/local/bin/k8s-danger-scan
 curl -LO https://github.com/palthisailohith/k8s-danger-scan/releases/latest/download/k8s-danger-scan_darwin_arm64
 chmod +x k8s-danger-scan_darwin_arm64
 sudo mv k8s-danger-scan_darwin_arm64 /usr/local/bin/k8s-danger-scan
-
-# Feeling old-school? Build it
-git clone https://github.com/palthisailohith/k8s-danger-scan.git && cd k8s-danger-scan && go build -o k8s-danger-scan ./cmd/k8s-danger-scan
-
+```
+Old-school? Build it:
+git clone https://github.com/palthisailohith/k8s-danger-scan.git
+cd k8s-danger-scan
+go build -o k8s-danger-scan ./cmd/k8s-danger-scan
 
 Try it in 10 seconds:
-
-Scan stuff (only HIGH by default – because who has time?)
-1. This command used to scan for any misconfigs in yaml's.
+# Scan file or dir (HIGH risks only – because who has time?)
 k8s-danger-scan scan deployment.yaml
 k8s-danger-scan scan ./k8s-manifests/
 
-2. Diff is used to compare your PR and the main branch.
+# Diff mode – only NEW stupidity (recommended!)
 k8s-danger-scan diff main-branch.yaml my-pr.yaml
 
-3.Brave? See the mediums too
+# Brave? See mediums too
 k8s-danger-scan scan --include-medium ./k8s/
 
-4.CI loves JSON
+# CI-friendly JSON
 k8s-danger-scan diff main.yaml pr.yaml --json
 
-What it looks like when it saves your a*s:
 
+When it saves your a*s (example output):
 HIGH RISK
 Resource: Deployment/api
 Namespace: prod
@@ -62,8 +67,27 @@ Medium risk: 0
 Resources affected: 1
 Namespaces affected: prod
 
+Exit codes (for your CI gate dreams):
 
-Rules? Exactly 12 mean ones (locked for v1)
-Privileged, hostPath, docker.sock, run-as-root (medium), allowPrivilegeEscalation, wildcard verbs/resources, default SA bindings, public LB in prod/kube-system, NodePort (medium), :latest (medium), hostNetwork, hostPID/IPC.
-Full list + why-they-suck → docs/rules.md
+0 = clean
+1 = mediums only (meh)
+2 = high risk → break the build here
+3 = error (bad YAML?)
 
+
+Rules: Exactly 12 mean ones (locked for v1)
+
+privileged-container (HIGH)
+hostpath-volume (HIGH)
+docker-socket-mount (HIGH)
+runs-as-root (MEDIUM)
+privilege-escalation-allowed (HIGH)
+wildcard-rbac (HIGH)
+clusterrolebinding-default-sa (HIGH)
+public-loadbalancer (HIGH)
+nodeport-service (MEDIUM)
+latest-image-tag (MEDIUM)
+host-network (HIGH)
+host-pid-ipc (HIGH)
+
+For more info on the tool refer docs :))
