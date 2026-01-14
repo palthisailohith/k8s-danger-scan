@@ -54,7 +54,7 @@ k8s-danger-scan scan --include-medium ./k8s/
 k8s-danger-scan diff main.yaml pr.yaml --json
 ```
 
-##When it saves your a*s (example output):
+When it saves your a*s (example output):
 ```bash
 HIGH RISK
 Resource: Deployment/api
@@ -78,7 +78,7 @@ Exit codes:
 3 = error (bad YAML?)
 ```
 
-##Rules: Exactly 12 mean ones (locked for v1)
+Rules: Exactly 12 mean ones (locked for v1)
 
 privileged-container (HIGH)
 hostpath-volume (HIGH)
