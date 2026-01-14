@@ -54,7 +54,8 @@ k8s-danger-scan scan --include-medium ./k8s/
 k8s-danger-scan diff main.yaml pr.yaml --json
 ```
 
-When it saves your a*s (example output):
+##When it saves your a*s (example output):
+```bash
 HIGH RISK
 Resource: Deployment/api
 Namespace: prod
@@ -63,7 +64,7 @@ Reason: Container runs in privileged mode
 Impact: If this gets compromised → full host takeover
 Fix: Delete that privileged: true line, seriously
 
-SUMMARY
+SUMMARY:
 High risk: 1
 Medium risk: 0
 Resources affected: 1
@@ -75,9 +76,9 @@ Exit codes:
 1 = mediums only (meh)
 2 = high risk → break the build here
 3 = error (bad YAML?)
+```
 
-
-Rules: Exactly 12 mean ones (locked for v1)
+##Rules: Exactly 12 mean ones (locked for v1)
 
 privileged-container (HIGH)
 hostpath-volume (HIGH)
