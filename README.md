@@ -33,16 +33,17 @@ git clone https://github.com/palthisailohith/k8s-danger-scan.git && cd k8s-dange
 Try it in 10 seconds:
 
 Scan stuff (only HIGH by default – because who has time?)
+1. This command used to scan for any misconfigs in yaml's.
 k8s-danger-scan scan deployment.yaml
 k8s-danger-scan scan ./k8s-manifests/
 
-Diff mode = my favorite (only new stupidity!)
+2. Diff is used to compare your PR and the main branch.
 k8s-danger-scan diff main-branch.yaml my-pr.yaml
 
-Brave? See the mediums too
+3.Brave? See the mediums too
 k8s-danger-scan scan --include-medium ./k8s/
 
-CI loves JSON
+4.CI loves JSON
 k8s-danger-scan diff main.yaml pr.yaml --json
 
 What it looks like when it saves your a*s:
